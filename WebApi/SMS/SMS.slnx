@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="../../IntegrationTests/IntegrationTests.csproj" Id="86d1c56d-b11c-4cd5-abf5-fbd03405e466" />
+  <Project Path="../../UnitTests/UnitTests.csproj" Id="2f02fd7d-bb3a-4d01-bb00-08b1a3d52c11" />
+  <Project Path="../Application/SMS.Application.csproj" />
+  <Project Path="../SMS.Domain/SMS.Domain.csproj" />
+  <Project Path="../SMS.Infrastructure/SMS.Infrastructure.csproj" />
+  <Project Path="SMS.Api.csproj" />
+</Solution>
