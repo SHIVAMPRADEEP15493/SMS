@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Moq;
 using SMS.Application.Common.Exceptions;
-using SMS.Application.SchoolsMst.DTOs;
-using SMS.Application.SchoolsMst.Interfaces;
-using SMS.Application.SchoolsMst.Services;
+using SMS.Application.DTOs;
+using SMS.Application.Interfaces;
+using SMS.Application.Services;
 using SMS.Domain.Entities;
 
 namespace UnitTests.Schools;
@@ -40,12 +40,10 @@ public class SchoolServiceTests
             .Setup(x => x.ExistsByCodeAsync( request.SchoolCode, It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
-        SMS_School_Mst? capturedSchool = null;
-
+        SchoolMst? capturedSchool = null;
         _repositoryMock
-            .Setup(x => x.AddAsync( It.IsAny<SMS_School_Mst>(), It.IsAny<CancellationToken>()))
-            .Callback<SMS_School_Mst, CancellationToken>( (school, _) => capturedSchool = school);
-
+            .Setup(x => x.AddAsync( It.IsAny<SchoolMst>(), It.IsAny<CancellationToken>()))
+            .Callback<SchoolMst, CancellationToken>( (school, _) => capturedSchool = school);
         // Act
         var result = await _service.CreateAsync( request, CancellationToken.None);
 
@@ -64,7 +62,7 @@ public class SchoolServiceTests
         Assert.NotNull(capturedSchool);
 
         _repositoryMock.Verify(
-            x => x.AddAsync( It.IsAny<SMS_School_Mst>(), It.IsAny<CancellationToken>()), Times.Once);
+            x => x.AddAsync( It.IsAny<SchoolMst>(), It.IsAny<CancellationToken>()), Times.Once);
 
         _repositoryMock.Verify(
             x => x.SaveChangesAsync( It.IsAny<CancellationToken>()), Times.Once);
@@ -92,7 +90,7 @@ public class SchoolServiceTests
         // Assert
         Assert.Contains( request.SchoolCode, exception.Message);
         _repositoryMock.Verify(
-            x => x.AddAsync( It.IsAny<SMS_School_Mst>(), It.IsAny<CancellationToken>()), Times.Never);
+            x => x.AddAsync( It.IsAny<SchoolMst>(), It.IsAny<CancellationToken>()), Times.Never);
         _repositoryMock.Verify(
             x => x.SaveChangesAsync( It.IsAny<CancellationToken>()), Times.Never);
     }
@@ -101,7 +99,7 @@ public class SchoolServiceTests
     public async Task GetByIdAsync_WhenSchoolExists_ShouldReturnSchool()
     {
         // Arrange
-        var school = new SMS_School_Mst(
+        var school = new SchoolMst(
             "SCH001",
             "Delhi Public School",
             "Sector 12",
@@ -135,7 +133,7 @@ public class SchoolServiceTests
 
         _repositoryMock
             .Setup(x => x.GetByIdAsync(  schoolId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((SMS_School_Mst?)null);
+            .ReturnsAsync((SchoolMst?)null);
 
         // Act & Assert
         var exception =
@@ -149,9 +147,9 @@ public class SchoolServiceTests
     public async Task GetAllAsync_ShouldReturnAllSchools()
     {
         // Arrange
-        var schools = new List<SMS_School_Mst>
+        var schools = new List<SchoolMst>
         {
-            new SMS_School_Mst(
+            new SchoolMst(
                 "SCH001",
                 "Delhi Public School",
                 null,
@@ -162,7 +160,7 @@ public class SchoolServiceTests
                 null,
                 null),
 
-            new SMS_School_Mst(
+            new SchoolMst(
                 "SCH002",
                 "ABC Public School",
                 null,
@@ -192,7 +190,7 @@ public class SchoolServiceTests
     public async Task UpdateAsync_WhenSchoolExists_ShouldUpdateSchool()
     {
         // Arrange
-        var school = new SMS_School_Mst(
+        var school = new SchoolMst(
             "SCH001",
             "Old School Name",
             "Old Address",
@@ -237,22 +235,20 @@ public class SchoolServiceTests
     {
         // Arrange
         var schoolId = Guid.NewGuid();
-
         var request = new UpdateSchoolMstRequest
         {
             SchoolName = "Updated School"
         };
-
         _repositoryMock
             .Setup(x => x.GetByIdAsync( schoolId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((SMS_School_Mst?)null);
+            .ReturnsAsync((SchoolMst?)null);
 
         // Act & Assert
         await Assert.ThrowsAsync<NotFoundException>(
             () => _service.UpdateAsync(schoolId, request, CancellationToken.None));
 
         _repositoryMock.Verify(
-            x => x.Update( It.IsAny<SMS_School_Mst>()), Times.Never);
+            x => x.Update( It.IsAny<SchoolMst>()), Times.Never);
 
         _repositoryMock.Verify(
             x => x.SaveChangesAsync( It.IsAny<CancellationToken>()), Times.Never);
@@ -262,7 +258,7 @@ public class SchoolServiceTests
     public async Task DeactivateAsync_WhenSchoolExists_ShouldDeactivateSchool()
     {
         // Arrange
-        var school = new SMS_School_Mst(
+        var school = new SchoolMst(
             "SCH001",
             "Delhi Public School",
             null,
@@ -290,7 +286,7 @@ public class SchoolServiceTests
     public async Task ActivateAsync_WhenSchoolExists_ShouldActivateSchool()
     {
         // Arrange
-        var school = new SMS_School_Mst(
+        var school = new SchoolMst(
             "SCH001",
             "Delhi Public School",
             null,
@@ -302,11 +298,9 @@ public class SchoolServiceTests
             null);
 
         school.Deactivate();
-
         _repositoryMock
             .Setup(x => x.GetByIdAsync( school.Id, It.IsAny<CancellationToken>()))
             .ReturnsAsync(school);
-
         // Act
         var result = await _service.ActivateAsync( school.Id, CancellationToken.None);
 
@@ -321,10 +315,9 @@ public class SchoolServiceTests
     {
         // Arrange
         var schoolId = Guid.NewGuid();
-
         _repositoryMock
             .Setup(x => x.GetByIdAsync( schoolId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((SMS_School_Mst?)null);
+            .ReturnsAsync((SchoolMst?)null);
 
         // Act & Assert
         await Assert.ThrowsAsync<NotFoundException>(
@@ -337,10 +330,9 @@ public class SchoolServiceTests
     {
         // Arrange
         var schoolId = Guid.NewGuid();
-
         _repositoryMock
             .Setup(x => x.GetByIdAsync( schoolId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((SMS_School_Mst?)null);
+            .ReturnsAsync((SchoolMst?)null);
 
         // Act & Assert
         await Assert.ThrowsAsync<NotFoundException>(

@@ -6,9 +6,9 @@ using System.Text;
 using SMS.Domain.Entities;
 
 namespace SMS.Infrastructure.Persistence.Configurations;
-public class SchoolsMstConfiguration : IEntityTypeConfiguration<SMS_School_Mst>
+public class SchoolsMstConfiguration : IEntityTypeConfiguration<SchoolMst>
 {
-    public void Configure(EntityTypeBuilder<SMS_School_Mst> builder)
+    public void Configure(EntityTypeBuilder<SchoolMst> builder)
     {
         builder.ToTable("SMS_School_Mst");
 
