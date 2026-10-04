@@ -1,14 +1,13 @@
 ﻿using FluentValidation;
-using SMS.Application.SchoolsMst.DTOs;
+using SMS.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMS.Application.SchoolsMst.Validators;
-
-public class UpdateSchoolRequestValidator : AbstractValidator<UpdateSchoolMstRequest>
+namespace SMS.Application.Validators;
+public class UpdateSchoolMstRequestValidator : AbstractValidator<UpdateSchoolMstRequest>
 {
-    public UpdateSchoolRequestValidator()
+    public UpdateSchoolMstRequestValidator()
     {
         RuleFor(x => x.SchoolName)
             .NotEmpty()

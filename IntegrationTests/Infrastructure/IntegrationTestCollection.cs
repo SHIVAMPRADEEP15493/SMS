@@ -5,6 +5,6 @@ using System.Text;
 namespace IntegrationTests.Infrastructure;
 
 [CollectionDefinition("Integration Tests", DisableParallelization = true)]
-public sealed class IntegrationTestCollection
+public sealed class IntegrationTestCollection : ICollectionFixture<IntegrationTestFixture>
 {
 }

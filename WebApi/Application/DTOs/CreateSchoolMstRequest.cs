@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMS.Application.SchoolsMst.DTOs;
+namespace SMS.Application.DTOs;
 public sealed class CreateSchoolMstRequest
 {
     public string SchoolCode { get; init; } = null!;

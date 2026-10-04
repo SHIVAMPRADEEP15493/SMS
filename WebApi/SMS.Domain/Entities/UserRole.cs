@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMS.Domain.Entities
+namespace SMS.Domain.Entities;
+public class UserRole
 {
-    public class UserRole
+    public Guid UserId { get; private set; }
+    public Guid RoleId { get; private set; }
+    private UserRole()
     {
-        public Guid UserId { get; private set; }
-        public Guid RoleId { get; private set; }
-        private UserRole()
-        {
-        }
-        public UserRole(
-            Guid userId,
-            Guid roleId)
-        {
-            UserId = userId;
-            RoleId = roleId;
-        }
+    }
+    public UserRole(Guid userId, Guid roleId)
+    {
+        UserId = userId;
+        RoleId = roleId;
     }
 }

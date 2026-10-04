@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SMS.Application.SchoolsMst.Services;
-using SMS.Application.SchoolsMst.DTOs;
+using SMS.Application.Services;
+using SMS.Application.DTOs;
 
 namespace SMS.Api.Controllers;
 

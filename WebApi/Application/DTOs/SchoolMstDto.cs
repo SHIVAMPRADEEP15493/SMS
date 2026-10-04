@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMS.Application.SchoolsMst.DTOs;
+namespace SMS.Application.DTOs;
 public class SchoolMstDto
 {
     public Guid Id { get; init; }

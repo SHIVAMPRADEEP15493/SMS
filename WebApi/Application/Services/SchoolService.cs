@@ -1,12 +1,12 @@
 ﻿using SMS.Application.Common.Exceptions;
-using SMS.Application.SchoolsMst.DTOs;
-using SMS.Application.SchoolsMst.Interfaces;
+using SMS.Application.DTOs;
+using SMS.Application.Interfaces;
 using SMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SMS.Application.SchoolsMst.Services;
+namespace SMS.Application.Services;
 public sealed class SchoolService
 {
     private readonly ISchoolRepository _repository;
@@ -14,18 +14,16 @@ public sealed class SchoolService
     {
         _repository = repository;
     }
-
-    public async Task<SchoolMstDto> CreateAsync( CreateSchoolMstRequest request, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto> CreateAsync(CreateSchoolMstRequest request, CancellationToken cancellationToken)
     {
-        var exists = await _repository.ExistsByCodeAsync( request.SchoolCode, cancellationToken);
+        var exists = await _repository.ExistsByCodeAsync(request.SchoolCode, cancellationToken);
 
         if (exists)
         {
-            throw new ConflictException(
-                $"School with code '{request.SchoolCode}' already exists.");
+            throw new ConflictException($"School with code '{request.SchoolCode}' already exists.");
         }
 
-        var school = new SMS_School_Mst(
+        var school = new SchoolMst(
                     request.SchoolCode,
                     request.SchoolName,
                     request.SchoolAddress,
@@ -36,28 +34,28 @@ public sealed class SchoolService
                     request.PhoneNumber,
                     request.Email);
 
-        await _repository.AddAsync( school, cancellationToken);
-        await _repository.SaveChangesAsync( cancellationToken);
+        await _repository.AddAsync(school, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
         return Map(school);
     }
 
-    public async Task<IReadOnlyList<SchoolMstDto>> GetAllAsync( CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<SchoolMstDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var schools = await _repository.GetAllAsync( cancellationToken);
+        var schools = await _repository.GetAllAsync(cancellationToken);
         return schools.Select(Map).ToList();
     }
 
-    public async Task<SchoolMstDto?> GetByIdAsync( Guid id, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var school = await _repository.GetByIdAsync( id, cancellationToken);
+        var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
         {
-            throw new NotFoundException( nameof(SMS_School_Mst), id);
+            throw new NotFoundException(nameof(SchoolMst), id);
         }
         return Map(school);
     }
 
-    private static SchoolMstDto Map(SMS_School_Mst school)
+    private static SchoolMstDto Map(SchoolMst school)
     {
         return new SchoolMstDto
         {
@@ -74,12 +72,12 @@ public sealed class SchoolService
             IsActive = school.IsActive
         };
     }
-    public async Task<SchoolMstDto?> UpdateAsync( Guid id, UpdateSchoolMstRequest request, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> UpdateAsync(Guid id, UpdateSchoolMstRequest request, CancellationToken cancellationToken)
     {
-        var school = await _repository.GetByIdAsync( id, cancellationToken);
+        var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
         {
-            throw new NotFoundException( nameof(SMS_School_Mst), id);
+            throw new NotFoundException(nameof(SchoolMst), id);
         }
         school.Update(
             request.SchoolName,
@@ -95,32 +93,28 @@ public sealed class SchoolService
         await _repository.SaveChangesAsync(cancellationToken);
         return Map(school);
     }
-    public async Task<SchoolMstDto?> DeactivateAsync( Guid id, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> DeactivateAsync(Guid id, CancellationToken cancellationToken)
     {
-        var school = await _repository.GetByIdAsync( id, cancellationToken);
+        var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
         {
-            throw new NotFoundException( nameof(SMS_School_Mst), id);
+            throw new NotFoundException(nameof(SchoolMst), id);
         }
-
         school.Deactivate();
         _repository.Update(school);
         await _repository.SaveChangesAsync(cancellationToken);
         return Map(school);
     }
-    public async Task<SchoolMstDto?> ActivateAsync( Guid id, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> ActivateAsync(Guid id, CancellationToken cancellationToken)
     {
-        var school = await _repository.GetByIdAsync( id, cancellationToken);
-
+        var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
         {
-            throw new NotFoundException( nameof(SMS_School_Mst), id);
+            throw new NotFoundException(nameof(SchoolMst), id);
         }
-
         school.Activate();
         _repository.Update(school);
         await _repository.SaveChangesAsync(cancellationToken);
         return Map(school);
     }
 }
-
