@@ -11,7 +11,7 @@ public class SchoolRepository : ISchoolRepository
     {
         _context = context;
     }
-    public async Task<SchoolMst?> GetByIdAsync( Guid id, CancellationToken cancellationToken = default)
+    public async Task<SchoolMst?> GetByIdAsync( long id, CancellationToken cancellationToken = default)
     {
         return await _context.SchoolsMst.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }

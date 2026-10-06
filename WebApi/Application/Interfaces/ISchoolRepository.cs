@@ -6,7 +6,7 @@ using System.Text;
 namespace SMS.Application.Interfaces;
 public interface ISchoolRepository
 {
-    Task<SchoolMst?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<SchoolMst?> GetByIdAsync(long id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<SchoolMst>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<bool> ExistsByCodeAsync(string code, CancellationToken cancellationToken = default);
     Task AddAsync(SchoolMst school, CancellationToken cancellationToken = default);

@@ -45,7 +45,7 @@ public sealed class SchoolService
         return schools.Select(Map).ToList();
     }
 
-    public async Task<SchoolMstDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
         var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
@@ -72,7 +72,7 @@ public sealed class SchoolService
             IsActive = school.IsActive
         };
     }
-    public async Task<SchoolMstDto?> UpdateAsync(Guid id, UpdateSchoolMstRequest request, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> UpdateAsync(long id, UpdateSchoolMstRequest request, CancellationToken cancellationToken)
     {
         var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
@@ -93,7 +93,7 @@ public sealed class SchoolService
         await _repository.SaveChangesAsync(cancellationToken);
         return Map(school);
     }
-    public async Task<SchoolMstDto?> DeactivateAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> DeactivateAsync(long id, CancellationToken cancellationToken)
     {
         var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
@@ -105,7 +105,7 @@ public sealed class SchoolService
         await _repository.SaveChangesAsync(cancellationToken);
         return Map(school);
     }
-    public async Task<SchoolMstDto?> ActivateAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<SchoolMstDto?> ActivateAsync(long id, CancellationToken cancellationToken)
     {
         var school = await _repository.GetByIdAsync(id, cancellationToken);
         if (school is null)
