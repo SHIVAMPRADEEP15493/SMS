@@ -1,7 +1,7 @@
 ﻿using SMS.Domain.Exceptions;
 
 namespace SMS.Domain.Entities;
-public class SessionMst
+public sealed class SessionMst
 {
     private SessionMst()
     {

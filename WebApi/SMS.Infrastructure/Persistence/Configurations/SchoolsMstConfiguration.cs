@@ -12,7 +12,12 @@ public class SchoolsMstConfiguration : IEntityTypeConfiguration<SchoolMst>
     {
         builder.ToTable("SMS_School_Mst");
 
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id)
+            .HasName("pk_school");
+
+        builder.Property(x => x.Id)
+               .HasColumnName("Id")
+               .ValueGeneratedOnAdd();
 
         builder.Property(x => x.SchoolCode)
             .HasMaxLength(50)

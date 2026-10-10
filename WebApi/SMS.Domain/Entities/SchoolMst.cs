@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SMS.Domain.Entities;
-public class SchoolMst
+public sealed class SchoolMst
 {
     /*
     public Guid Id { get; private set; }
@@ -82,7 +82,7 @@ public class SchoolMst
     }
     */
 
-    public Guid Id { get; private set; }
+    public long Id { get; private set; }
     public string SchoolCode { get; private set; } = null!;
     public string SchoolName { get; private set; } = null!;
     public string? SchoolAddress { get; private set; }
@@ -110,7 +110,7 @@ public class SchoolMst
         string? phoneNumber,
         string? email)
     {
-        Id = Guid.NewGuid();
+        Id = 0; // Will be set by the database
 
         SchoolCode = code;
         SchoolName = name;

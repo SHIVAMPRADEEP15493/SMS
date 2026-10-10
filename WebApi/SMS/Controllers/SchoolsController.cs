@@ -28,29 +28,29 @@ public class SchoolsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById( Guid id, CancellationToken cancellationToken)
+    [HttpGet("{id:long}")]
+    public async Task<IActionResult> GetById( long id, CancellationToken cancellationToken)
     {
         var result = await _schoolService.GetByIdAsync( id, cancellationToken);
         return Ok(result);
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update( Guid id, UpdateSchoolMstRequest request, CancellationToken cancellationToken)
+    [HttpPut("{id:long}")]
+    public async Task<IActionResult> Update( long id, UpdateSchoolMstRequest request, CancellationToken cancellationToken)
     {
         var result = await _schoolService.UpdateAsync( id, request, cancellationToken);
         return Ok(result);
     }
 
-    [HttpPatch("{id:guid}/activate")]
-    public async Task<IActionResult> Activate( Guid id, CancellationToken cancellationToken)
+    [HttpPatch("{id:long}/activate")]
+    public async Task<IActionResult> Activate( long id, CancellationToken cancellationToken)
     {
         var result = await _schoolService.ActivateAsync( id, cancellationToken);
         return Ok(result);
     }
 
-    [HttpPatch("{id:guid}/deactivate")]
-    public async Task<IActionResult> Deactivate( Guid id, CancellationToken cancellationToken)
+    [HttpPatch("{id:long}/deactivate")]
+    public async Task<IActionResult> Deactivate( long id, CancellationToken cancellationToken)
     {
         var result = await _schoolService.DeactivateAsync( id, cancellationToken);
         return Ok(result);

@@ -129,16 +129,16 @@ public class SchoolServiceTests
     public async Task GetByIdAsync_WhenSchoolDoesNotExist_ShouldThrowNotFoundException()
     {
         // Arrange
-        var schoolId = Guid.NewGuid();
+        var schoolId = 1L; // Replace with actual school ID
 
         _repositoryMock
-            .Setup(x => x.GetByIdAsync(  schoolId, It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetByIdAsync(schoolId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((SchoolMst?)null);
 
         // Act & Assert
         var exception =
             await Assert.ThrowsAsync<NotFoundException>(
-                () => _service.GetByIdAsync( schoolId, CancellationToken.None));
+                () => _service.GetByIdAsync(schoolId, CancellationToken.None));
 
         Assert.Contains( schoolId.ToString(), exception.Message);
     }
@@ -234,7 +234,7 @@ public class SchoolServiceTests
     public async Task UpdateAsync_WhenSchoolDoesNotExist_ShouldThrowNotFoundException()
     {
         // Arrange
-        var schoolId = Guid.NewGuid();
+        var schoolId = 1L; // Replace with actual school ID
         var request = new UpdateSchoolMstRequest
         {
             SchoolName = "Updated School"
@@ -314,7 +314,7 @@ public class SchoolServiceTests
     public async Task DeactivateAsync_WhenSchoolDoesNotExist_ShouldThrowNotFoundException()
     {
         // Arrange
-        var schoolId = Guid.NewGuid();
+        var schoolId = 1L; // Replace with actual school ID
         _repositoryMock
             .Setup(x => x.GetByIdAsync( schoolId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((SchoolMst?)null);
@@ -329,7 +329,7 @@ public class SchoolServiceTests
     public async Task ActivateAsync_WhenSchoolDoesNotExist_ShouldThrowNotFoundException()
     {
         // Arrange
-        var schoolId = Guid.NewGuid();
+        var schoolId = 1L;
         _repositoryMock
             .Setup(x => x.GetByIdAsync( schoolId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((SchoolMst?)null);

@@ -14,7 +14,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<SchoolMst> SchoolsMst => Set<SchoolMst>();
     public DbSet<SessionMst> SessionMst => Set<SessionMst>();
-
+    public DbSet<TeacherMst> TeacherMst => Set<TeacherMst>();
+    public DbSet<ClassMst> ClassMst => Set<ClassMst>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

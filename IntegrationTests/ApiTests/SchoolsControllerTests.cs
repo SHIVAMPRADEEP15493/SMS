@@ -395,7 +395,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         var school = await response.Content.ReadFromJsonAsync<SchoolMstDto>();
         Assert.NotNull(school);
-        Assert.NotEqual(Guid.Empty, school.Id);
+        Assert.NotEqual(0L, school.Id);
         Assert.Equal(request.SchoolCode, school.SchoolCode);
         Assert.Equal(request.SchoolName, school.SchoolName);
         Assert.True(school.IsActive);
@@ -405,7 +405,7 @@ public class SchoolsControllerTests : IntegrationTestBase
     {
         // Arrange
         await ResetDatabaseAsync();
-        var id = Guid.NewGuid();
+        var id = 1L; // Replace with actual school ID
 
         // Act
         var response = await Client.GetAsync($"/api/Schools/{id}");

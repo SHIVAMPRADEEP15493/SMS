@@ -14,6 +14,12 @@ public static class DependencyInjection
         services.AddScoped<SessionService>();
         services.AddValidatorsFromAssemblyContaining<CreateSessionMstRequestValidator>();
         services.AddValidatorsFromAssemblyContaining<UpdateSessionMstRequestValidator>();
+        services.AddScoped<TeacherService>();
+        services.AddValidatorsFromAssemblyContaining<CreateTeacherMstRequestValidator>();
+        services.AddValidatorsFromAssemblyContaining<UpdateTeacherMstRequestValidator>();
+        services.AddScoped<ClassService>();
+        services.AddValidatorsFromAssemblyContaining<CreateClassMstRequestValidator>();
+        services.AddValidatorsFromAssemblyContaining<UpdateClassMstRequestValidator>();
         return services;
     }
 }

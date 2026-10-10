@@ -5,7 +5,7 @@ using System.Text;
 namespace SMS.Application.DTOs;
 public class SchoolMstDto
 {
-    public Guid Id { get; init; }
+    public long Id { get; init; }
     public string SchoolCode { get; init; } = null!;
     public string SchoolName { get; init; } = null!;
     public string? SchoolAddress { get; init; }
