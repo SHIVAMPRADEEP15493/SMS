@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SMS.Application.Features.StudentEnrollments.DTOs;
+using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Response;
+using SMS.Application.DTOs.Update;
 using SMS.Application.Features.StudentEnrollments.Services;
 
 namespace SMS.Api.Controllers;

@@ -1,6 +1,6 @@
 ﻿using IntegrationTests.Infrastructure;
 using IntegrationTests.TestData;
-using SMS.Application.DTOs;
+using SMS.Application.DTOs.Response;
 using System;
 using System.Collections.Generic;
 using System.Net;

@@ -1,5 +1,7 @@
 ﻿using SMS.Application.Common.Exceptions;
-using SMS.Application.Features.StudentEnrollments.DTOs;
+using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Response;
+using SMS.Application.DTOs.Update;
 using SMS.Application.Interfaces;
 using SMS.Domain.Entities;
 

@@ -1,13 +1,11 @@
 ﻿using IntegrationTests.Infrastructure;
 using IntegrationTests.TestData;
-using SMS.Application.DTOs;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System;
-using System.Text;
-using System.Collections.Generic;
-
+using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Update;
+using SMS.Application.DTOs.Response;
 namespace IntegrationTests.ApiTests;
 
 [Collection("Integration Tests")]

@@ -1,4 +1,6 @@
-﻿using SMS.Application.DTOs;
+﻿using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Response;
+using SMS.Application.DTOs.Update;
 using System;
 using System.Collections.Generic;
 using System.Text;

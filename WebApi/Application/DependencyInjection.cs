@@ -2,7 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using SMS.Application.Features.StudentEnrollments.Services;
 using SMS.Application.Services;
-using SMS.Application.Validators;
+using SMS.Application.Validators.CreateValidators;
+using SMS.Application.Validators.UpdateValidators;
 
 namespace SMS.Application;
 public static class DependencyInjection
