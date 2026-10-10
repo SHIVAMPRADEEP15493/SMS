@@ -1,6 +1,5 @@
 ﻿using IntegrationTests.Infrastructure;
 using IntegrationTests.TestData;
-using SMS.Application.Features.StudentEnrollments.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
+using SMS.Application.DTOs.Response;
 
 namespace IntegrationTests.ApiTests;
 

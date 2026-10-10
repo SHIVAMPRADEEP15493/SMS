@@ -1,8 +1,10 @@
 ﻿using SMS.Application.Common.Exceptions;
-using SMS.Application.DTOs;
 using SMS.Application.IServices;
 using SMS.Domain.Entities;
 using SMS.Application.Interfaces;
+using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Response;
+using SMS.Application.DTOs.Update;
 
 namespace SMS.Application.Services;
 public sealed class ClassService : IClassService

@@ -1,8 +1,9 @@
 ﻿using SMS.Domain.Enums;
-using SMS.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Update;
 
 namespace IntegrationTests.TestData;
 public static class TeacherTestData

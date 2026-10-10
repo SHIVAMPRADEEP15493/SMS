@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SMS.Application.Services;
-using SMS.Application.DTOs;
+using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Response;
+using SMS.Application.DTOs.Update;
 
 namespace SMS.Api.Controllers;
 

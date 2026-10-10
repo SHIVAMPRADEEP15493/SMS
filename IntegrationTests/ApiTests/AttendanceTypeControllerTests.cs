@@ -1,8 +1,7 @@
 ﻿using IntegrationTests.Infrastructure;
-using IntegrationTests.TestData;
-using SMS.Application.DTOs;
-using System;
-using System.Collections.Generic;
+using SMS.Application.DTOs.Create;
+using SMS.Application.DTOs.Update;
+using SMS.Application.DTOs.Response;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
