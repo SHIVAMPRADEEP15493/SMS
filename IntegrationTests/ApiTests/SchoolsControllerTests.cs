@@ -16,6 +16,8 @@ public class SchoolsControllerTests : IntegrationTestBase
     public SchoolsControllerTests(IntegrationTestFixture fixture) : base(fixture.Factory)
     {
     }
+    private const string Endpoint = "/api/Schools";
+
     private async Task ResetDatabaseAsync()
     {
         await Factory.ResetDatabaseAsync();
@@ -28,7 +30,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var request = SchoolTestData.CreateRequest();
 
         // Act
-        var response = await Client.PostAsJsonAsync("/api/Schools", request);
+        var response = await Client.PostAsJsonAsync(Endpoint, request);
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -38,7 +40,7 @@ public class SchoolsControllerTests : IntegrationTestBase
     public async Task Database_ShouldStartClean()
     {
         await ResetDatabaseAsync();
-        var response = await Client.GetAsync("/api/Schools");
+        var response = await Client.GetAsync(Endpoint);
         response.EnsureSuccessStatusCode();
 
         var schools = await response.Content.ReadFromJsonAsync<List<SchoolMstDto>>();
@@ -51,7 +53,7 @@ public class SchoolsControllerTests : IntegrationTestBase
     {
         await ResetDatabaseAsync();
         // Act
-        var response = await Client.GetAsync("/api/Schools");
+        var response = await Client.GetAsync(Endpoint);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -68,13 +70,13 @@ public class SchoolsControllerTests : IntegrationTestBase
             SchoolName = "Integration Test School"
         };
 
-        var createResponse = await Client.PostAsJsonAsync("/api/Schools", createRequest);
+        var createResponse = await Client.PostAsJsonAsync(Endpoint, createRequest);
         var createdSchool = await createResponse.Content.ReadFromJsonAsync<SchoolMstDto>();
 
         Assert.NotNull(createdSchool);
 
         // Act
-        var response = await Client.GetAsync($"/api/Schools/{createdSchool.Id}");
+        var response = await Client.GetAsync($"{Endpoint}/{createdSchool.Id}");
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -88,7 +90,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var request = SchoolTestData.CreateRequestWithEmptyCode();
 
         // Act
-        var response = await Client.PostAsJsonAsync("/api/Schools", request);
+        var response = await Client.PostAsJsonAsync(Endpoint, request);
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -102,7 +104,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var request = SchoolTestData.CreateRequestWithInvalidEmail();
 
         // Act
-        var response = await Client.PostAsJsonAsync("/api/Schools", request);
+        var response = await Client.PostAsJsonAsync(Endpoint, request);
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -116,7 +118,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var request = SchoolTestData.CreateRequestWithInvalidCode();
 
         // Act
-        var response = await Client.PostAsJsonAsync("/api/Schools", request);
+        var response = await Client.PostAsJsonAsync(Endpoint, request);
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -134,7 +136,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         };
 
         // Act
-        var response = await Client.PostAsJsonAsync("/api/Schools", request);
+        var response = await Client.PostAsJsonAsync(Endpoint, request);
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest,response.StatusCode);
@@ -155,7 +157,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var id = Guid.NewGuid();
 
         // Act
-        var response = await Client.GetAsync( $"/api/Schools/{id}");
+        var response = await Client.GetAsync( $"{Endpoint}/{id}");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -171,8 +173,8 @@ public class SchoolsControllerTests : IntegrationTestBase
         var secondRequest = SchoolTestData.CreateRequest(code: code, name: "Second School");
 
         // Act
-        var firstResponse = await Client.PostAsJsonAsync("/api/Schools", firstRequest);
-        var secondResponse = await Client.PostAsJsonAsync("/api/Schools", secondRequest);
+        var firstResponse = await Client.PostAsJsonAsync(Endpoint, firstRequest);
+        var secondResponse = await Client.PostAsJsonAsync(Endpoint, secondRequest);
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, firstResponse.StatusCode);
@@ -185,7 +187,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         // Arrange
         await ResetDatabaseAsync();
         var createRequest = SchoolTestData.CreateRequest();
-        var createResponse = await Client.PostAsJsonAsync("/api/Schools", createRequest);
+        var createResponse = await Client.PostAsJsonAsync(Endpoint, createRequest);
         var createdSchool =await createResponse.Content.ReadFromJsonAsync<SchoolMstDto>();
         Assert.NotNull(createdSchool);
         var updateRequest = new UpdateSchoolMstRequest
@@ -196,7 +198,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         };
 
         // Act
-        var response = await Client.PutAsJsonAsync($"/api/Schools/{createdSchool.Id}", updateRequest);
+        var response = await Client.PutAsJsonAsync($"{Endpoint}/{createdSchool.Id}", updateRequest);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -215,7 +217,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var id = Guid.NewGuid();
 
         // Act
-        var response = await Client.PutAsJsonAsync($"/api/Schools/{id}", updateRequest);
+        var response = await Client.PutAsJsonAsync($"{Endpoint}/{id}", updateRequest);
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -231,12 +233,12 @@ public class SchoolsControllerTests : IntegrationTestBase
             SchoolCode = "SCH001",
             SchoolName = "Test School"
         };
-        var createResponse = await Client.PostAsJsonAsync("/api/Schools", createRequest);
+        var createResponse = await Client.PostAsJsonAsync(Endpoint, createRequest);
         var school = await createResponse.Content.ReadFromJsonAsync<SchoolMstDto>();
         Assert.NotNull(school);
 
         // Act
-        var response = await Client.PatchAsync($"/api/Schools/{school.Id}/deactivate", null);
+        var response = await Client.PatchAsync($"{Endpoint}/{school.Id}/deactivate", null);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -253,13 +255,13 @@ public class SchoolsControllerTests : IntegrationTestBase
             SchoolName = "Test School"
         };
 
-        var createResponse = await Client.PostAsJsonAsync("/api/Schools", createRequest);
+        var createResponse = await Client.PostAsJsonAsync(Endpoint, createRequest);
         var school = await createResponse.Content.ReadFromJsonAsync<SchoolMstDto>();
         Assert.NotNull(school);
-        await Client.PatchAsync($"/api/Schools/{school.Id}/deactivate", null);
+        await Client.PatchAsync($"{Endpoint}/{school.Id}/deactivate", null);
 
         // Act
-        var response = await Client.PatchAsync($"/api/Schools/{school.Id}/activate", null);
+        var response = await Client.PatchAsync($"{Endpoint}/{school.Id}/activate", null);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -273,7 +275,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var id = Guid.NewGuid();
 
         // Act
-        var response = await Client.PatchAsync($"/api/Schools/{id}/deactivate", null);
+        var response = await Client.PatchAsync($"{Endpoint}/{id}/deactivate", null);
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -287,7 +289,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var id = Guid.NewGuid();
 
         // Act
-        var response = await Client.PatchAsync($"/api/Schools/{id}/activate", null);
+        var response = await Client.PatchAsync($"{Endpoint}/{id}/activate", null);
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -298,7 +300,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         // Arrange
         await ResetDatabaseAsync();
         // Act
-        var response = await Client.GetAsync("/api/Schools/not-a-guid");
+        var response = await Client.GetAsync($"{Endpoint}/not-a-guid");
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -317,8 +319,8 @@ public class SchoolsControllerTests : IntegrationTestBase
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync(
-            "/api/Schools",
+        var response = await Client.PostAsJsonAsync(
+            Endpoint,
             request);
 
         // Assert
@@ -367,10 +369,10 @@ public class SchoolsControllerTests : IntegrationTestBase
             SchoolName = "First School"
         };
 
-        await Client.PostAsJsonAsync("/api/Schools", request);
+        await Client.PostAsJsonAsync(Endpoint, request);
 
         // Act
-        var response = await Client.PostAsJsonAsync("/api/Schools", request);
+        var response = await Client.PostAsJsonAsync(Endpoint, request);
 
         // Assert
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
@@ -389,7 +391,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var request = SchoolTestData.CreateRequest();
 
         // Act
-        var response = await Client.PostAsJsonAsync("/api/Schools", request);
+        var response = await Client.PostAsJsonAsync(Endpoint, request);
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -408,7 +410,7 @@ public class SchoolsControllerTests : IntegrationTestBase
         var id = 1L; // Replace with actual school ID
 
         // Act
-        var response = await Client.GetAsync($"/api/Schools/{id}");
+        var response = await Client.GetAsync($"{Endpoint}/{id}");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

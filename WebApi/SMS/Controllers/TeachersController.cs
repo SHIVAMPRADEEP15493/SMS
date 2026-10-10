@@ -7,7 +7,7 @@ namespace SMS.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TeachersController : ControllerBase
+public sealed class TeachersController : ControllerBase
 {
     private readonly TeacherService _teacherService;
     public TeachersController(TeacherService teacherService)

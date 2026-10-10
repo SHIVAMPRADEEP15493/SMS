@@ -13,3 +13,11 @@ public enum Gender
     Female = 2,
     Other = 3
 }
+
+public enum StudentStatus
+{
+    Active = 1,
+    Completed = 2,
+    Transferred = 3,
+    Withdrawn = 4
+}

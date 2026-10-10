@@ -13,6 +13,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
     public TeacherControllerTests(IntegrationTestFixture fixture) : base(fixture.Factory)
     {
     }
+    private const string Endpoint = "/api/teachers";
 
     [Fact]
     public async Task Create_ShouldReturnCreated()
@@ -27,7 +28,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
                 employeeCode: "EMP001");
 
         var response =
-            await Client.PostAsJsonAsync("/api/teachers", request);
+            await Client.PostAsJsonAsync(Endpoint, request);
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         var result =
             await response.Content.ReadFromJsonAsync<TeacherMstResponse>();
@@ -62,7 +63,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
         };
 
         var response =
-            await Client.PostAsJsonAsync("/api/teachers", request);
+            await Client.PostAsJsonAsync(Endpoint, request);
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
@@ -74,7 +75,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var response =
             await Client.PostAsJsonAsync(
-                "/api/teachers", request);
+                Endpoint, request);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -93,7 +94,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var firstResponse =
             await Client.PostAsJsonAsync(
-                "/api/teachers", firstRequest);
+                Endpoint, firstRequest);
 
         Assert.Equal(HttpStatusCode.Created, firstResponse.StatusCode);
 
@@ -105,7 +106,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var secondResponse =
             await Client.PostAsJsonAsync(
-                "/api/teachers", secondRequest);
+                Endpoint, secondRequest);
 
         Assert.Equal(HttpStatusCode.Conflict, secondResponse.StatusCode);
     }
@@ -124,7 +125,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var firstResponse =
             await Client.PostAsJsonAsync(
-                "/api/teachers", firstRequest);
+                Endpoint, firstRequest);
 
         Assert.Equal(HttpStatusCode.Created, firstResponse.StatusCode);
 
@@ -136,7 +137,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var secondResponse =
             await Client.PostAsJsonAsync(
-                "/api/teachers", secondRequest);
+                Endpoint, secondRequest);
 
         Assert.Equal(HttpStatusCode.Conflict, secondResponse.StatusCode);
     }
@@ -156,7 +157,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var response1 =
             await Client.PostAsJsonAsync(
-                "/api/teachers", request1);
+                Endpoint, request1);
 
         Assert.Equal(HttpStatusCode.Created, response1.StatusCode);
 
@@ -168,7 +169,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var response2 =
             await Client.PostAsJsonAsync(
-                "/api/teachers", request2);
+                Endpoint, request2);
 
         Assert.Equal(HttpStatusCode.Created, response2.StatusCode);
     }
@@ -182,7 +183,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var createResponse =
             await Client.PostAsJsonAsync(
-                "/api/teachers", TeacherTestData.CreateRequest(schoolId));
+                Endpoint, TeacherTestData.CreateRequest(schoolId));
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
 
@@ -224,7 +225,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var createResponse =
             await Client.PostAsJsonAsync(
-                "/api/teachers", TeacherTestData.CreateRequest(schoolId));
+                Endpoint, TeacherTestData.CreateRequest(schoolId));
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
 
@@ -275,7 +276,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var createResponse =
             await Client.PostAsJsonAsync(
-                "/api/teachers", TeacherTestData.CreateRequest(schoolId));
+                Endpoint, TeacherTestData.CreateRequest(schoolId));
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
 
@@ -310,7 +311,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
         var schoolId = await CreateSchoolAsync();
 
         var createResponse =
-            await Client.PostAsJsonAsync("/api/teachers", TeacherTestData.CreateRequest(schoolId));
+            await Client.PostAsJsonAsync(Endpoint, TeacherTestData.CreateRequest(schoolId));
 
         var created =
             await createResponse.Content.ReadFromJsonAsync<TeacherMstResponse>();
@@ -339,7 +340,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
         var schoolId = await CreateSchoolAsync();
         var response1 =
             await Client.PostAsJsonAsync(
-                "/api/teachers",
+                Endpoint,
                 TeacherTestData.CreateRequest(
                     schoolId,
                     "TCH001",
@@ -347,7 +348,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
 
         var response2 =
             await Client.PostAsJsonAsync(
-                "/api/teachers",
+                Endpoint,
                 TeacherTestData.CreateRequest(
                     schoolId,
                     "TCH002",
@@ -356,7 +357,7 @@ public sealed class TeacherControllerTests : IntegrationTestBase
         Assert.Equal(HttpStatusCode.Created, response1.StatusCode);
         Assert.Equal(HttpStatusCode.Created, response2.StatusCode);
         var response =
-            await Client.GetAsync("/api/teachers");
+            await Client.GetAsync(Endpoint);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
